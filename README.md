@@ -23,7 +23,7 @@ RTL modules includes
 
 ### Architecture
 
-![](doc\soc_structure.png)
+![](doc/soc_structure.png)
 
  
 
