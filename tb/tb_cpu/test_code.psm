@@ -1,0 +1,10 @@
+
+      cold_start: LOAD     s0, 01 
+                  ADD      s0, 0b
+                  ADDCY    s0, F0
+                  OUTPUT   s0, C7
+            loop: JUMP     loop
+                  LOAD     s1, 02
+                  SUB      s1, 01 
+            end:  JUMP     end
+

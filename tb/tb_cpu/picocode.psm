@@ -1,0 +1,420 @@
+;;////////////////////////////////////////////////////////////////////////////////
+;; Author: merlionfire 
+;; 
+;; Create Date:    06/07/2015 
+;; Design Name: 
+;; File Name:      picocode.psm   
+;; Project Name: 
+;; Target Devices: spartan3AN-4 
+;; Tool versions:  picosim 
+;; Description: 
+;;
+;; Dependencies: 
+;;
+;; Revision: 
+;; Revision 0.01 - File Created
+;; Revision 1.00 - Fractal Engin works and picture can show on the screen 
+
+;;============================================================================
+;; Ascii table 
+;;============================================================================
+CONSTANT ascii_CR         , 0D    ; ascii code
+
+CONSTANT ascii_SPACE      , 20    ; ascii code
+CONSTANT ascii_EXCLAIM    , 21    ; ascii code
+CONSTANT ascii_DBLQUOT    , 22    ; ascii code
+CONSTANT ascii_NUMSIGN    , 23    ; ascii code
+CONSTANT ascii_DOLLAR     , 24    ; ascii code
+CONSTANT ascii_PERCENT    , 25    ; ascii code
+CONSTANT ascii_AMP        , 26    ; ascii code
+CONSTANT ascii_SINQUOT    , 27    ; ascii code
+CONSTANT ascii_LPAREN     , 28    ; ascii code
+CONSTANT ascii_RPAREN     , 29    ; ascii code
+CONSTANT ascii_ASTERISK   , 2A    ; ascii code
+CONSTANT ascii_PLUS       , 2B    ; ascii code
+CONSTANT ascii_COMMA      , 2C    ; ascii code
+CONSTANT ascii_MINUS      , 2D    ; ascii code
+CONSTANT ascii_PERIOD     , 2E    ; ascii code
+CONSTANT ascii_FWDSLASH   , 2F    ; ascii code
+
+CONSTANT ascii_0          , 30    ; ascii code
+CONSTANT ascii_1          , 31    ; ascii code
+CONSTANT ascii_2          , 32    ; ascii code
+CONSTANT ascii_3          , 33    ; ascii code
+CONSTANT ascii_4          , 34    ; ascii code
+CONSTANT ascii_5          , 35    ; ascii code
+CONSTANT ascii_6          , 36    ; ascii code
+CONSTANT ascii_7          , 37    ; ascii code
+CONSTANT ascii_8          , 38    ; ascii code
+CONSTANT ascii_9          , 39    ; ascii code
+CONSTANT ascii_COLON      , 3A    ; ascii code
+CONSTANT ascii_SEMI       , 3B    ; ascii code
+CONSTANT ascii_LESS       , 3C    ; ascii code
+CONSTANT ascii_EQUAL      , 3D    ; ascii code
+CONSTANT ascii_GREATER    , 3E    ; ascii code
+CONSTANT ascii_QUESTION   , 3F    ; ascii code
+
+CONSTANT ascii_CIRCAT     , 40    ; ascii code
+CONSTANT ascii_A          , 41    ; ascii code
+CONSTANT ascii_B          , 42    ; ascii code
+CONSTANT ascii_C          , 43    ; ascii code
+CONSTANT ascii_D          , 44    ; ascii code
+CONSTANT ascii_E          , 45    ; ascii code
+CONSTANT ascii_F          , 46    ; ascii code
+CONSTANT ascii_G          , 47    ; ascii code
+CONSTANT ascii_H          , 48    ; ascii code
+CONSTANT ascii_I          , 49    ; ascii code
+CONSTANT ascii_J          , 4A    ; ascii code
+CONSTANT ascii_K          , 4B    ; ascii code
+CONSTANT ascii_L          , 4C    ; ascii code
+CONSTANT ascii_M          , 4D    ; ascii code
+CONSTANT ascii_N          , 4E    ; ascii code
+CONSTANT ascii_O          , 4F    ; ascii code
+
+CONSTANT ascii_P          , 50    ; ascii code
+CONSTANT ascii_Q          , 51    ; ascii code
+CONSTANT ascii_R          , 52    ; ascii code
+CONSTANT ascii_S          , 53    ; ascii code
+CONSTANT ascii_T          , 54    ; ascii code
+CONSTANT ascii_U          , 55    ; ascii code
+CONSTANT ascii_V          , 56    ; ascii code
+CONSTANT ascii_W          , 57    ; ascii code
+CONSTANT ascii_X          , 58    ; ascii code
+CONSTANT ascii_Y          , 59    ; ascii code
+CONSTANT ascii_Z          , 5A    ; ascii code
+CONSTANT ascii_LBKT       , 5B    ; ascii code
+CONSTANT ascii_BKSLASH    , 5C    ; ascii code
+CONSTANT ascii_RBKT       , 5D    ; ascii code
+CONSTANT ascii_CARET      , 5E    ; ascii code
+CONSTANT ascii_DASH       , 5F    ; ascii code
+
+CONSTANT ascii_TICK       , 60    ; ascii code
+CONSTANT ascii_a          , 61    ; ascii code
+CONSTANT ascii_b          , 62    ; ascii code
+CONSTANT ascii_c          , 63    ; ascii code
+CONSTANT ascii_d          , 64    ; ascii code
+CONSTANT ascii_e          , 65    ; ascii code
+CONSTANT ascii_f          , 66    ; ascii code
+CONSTANT ascii_g          , 67    ; ascii code
+CONSTANT ascii_h          , 68    ; ascii code
+CONSTANT ascii_i          , 69    ; ascii code
+CONSTANT ascii_j          , 6A    ; ascii code
+CONSTANT ascii_k          , 6B    ; ascii code
+CONSTANT ascii_l          , 6C    ; ascii code
+CONSTANT ascii_m          , 6D    ; ascii code
+CONSTANT ascii_n          , 6E    ; ascii code
+CONSTANT ascii_o          , 6F    ; ascii code
+
+CONSTANT ascii_p          , 70    ; ascii code
+CONSTANT ascii_q          , 71    ; ascii code
+CONSTANT ascii_r          , 72    ; ascii code
+CONSTANT ascii_s          , 73    ; ascii code
+CONSTANT ascii_t          , 74    ; ascii code
+CONSTANT ascii_u          , 75    ; ascii code
+CONSTANT ascii_v          , 76    ; ascii code
+CONSTANT ascii_w          , 77    ; ascii code
+CONSTANT ascii_x          , 78    ; ascii code
+CONSTANT ascii_y          , 79    ; ascii code
+CONSTANT ascii_z          , 7A    ; ascii code
+
+;;============================================================================
+;; Other constants.
+;;============================================================================
+
+CONSTANT ZERO             , 00    ; zero
+CONSTANT ONE              , 01    ; one
+
+;;============================================================================
+;; Ports and related constants.
+;;============================================================================
+
+CONSTANT pt_disp_cs       , 00    ; port disp_cs
+CONSTANT pt_cw_x_orig     , 01    ; port cw_x_orig
+CONSTANT pt_cw_y_orig     , 02    ; port cw_y_orig
+CONSTANT pt_cw_x_size     , 03    ; port cw_x_size
+CONSTANT pt_cw_y_size     , 04    ; port cw_y_size
+CONSTANT pt_cb_addr_orig_l , 05   ; port cb_addr_orig_l 
+CONSTANT pt_cb_addr_orig_h , 06   ; port cb_addr_orig_h 
+CONSTANT pt_char_rgl      , 07    ; port char_rgl
+CONSTANT pt_graph_rgl     , 08    ; port graph_rgl
+CONSTANT pt_cw_row        , 09    ; port cw_row
+CONSTANT pt_cw_col        , 0a    ; port cw_col
+CONSTANT pt_cb_wr_data    , 0b    ; port cb_wr_data
+
+;;---------------- ddr2 mgr registers ----------------------
+CONSTANT reg_ddr2_status_ctrl  , 10    ; port 
+CONSTANT reg_ddr2_data0_7_0    , 11    ; port 
+CONSTANT reg_ddr2_data0_15_8   , 12    ; port 
+CONSTANT reg_ddr2_data0_23_16  , 13    ; port 
+CONSTANT reg_ddr2_data0_31_24  , 14    ; port 
+CONSTANT reg_ddr2_data1_7_0    , 15    ; port 
+CONSTANT reg_ddr2_data1_15_8   , 16    ; port 
+CONSTANT reg_ddr2_data1_23_16  , 17    ; port 
+CONSTANT reg_ddr2_data1_31_24  , 18    ; port 
+CONSTANT reg_ddr2_addr_7_0     , 19    ; port 
+CONSTANT reg_ddr2_addr_15_8    , 1a    ; port 
+CONSTANT reg_ddr2_addr_23_16   , 1b    ; port 
+
+CONSTANT active_ddr2_write     , 01    ; set auto in 
+CONSTANT pic_fg_red_green      , 00    ; set auto in 
+CONSTANT pic_fg_blue_bg        , F1    ; set auto in 
+
+
+;;---------------- frac unit registers ----------------------
+CONSTANT REG_FRAC_CTRL_STATUS        ,  20 ; port
+CONSTANT REG_FRAC_CX_7_0_ADDR        ,  21 ; port
+CONSTANT REG_FRAC_CX_15_8_ADDR       ,  22 ; port
+CONSTANT REG_FRAC_CX_23_16_ADDR      ,  23 ; port
+CONSTANT REG_FRAC_CX_31_24_ADDR      ,  24 ; port
+CONSTANT REG_FRAC_CY_7_0_ADDR        ,  25 ; port
+CONSTANT REG_FRAC_CY_15_8_ADDR       ,  26 ; port
+CONSTANT REG_FRAC_CY_23_16_ADDR      ,  27 ; port
+CONSTANT REG_FRAC_CY_31_24_ADDR      ,  28 ; port
+CONSTANT REG_FRAC_MAX_ITER_LOW_ADDR  ,  29 ; port
+CONSTANT REG_FRAC_MAX_ITER_HIGH_ADDR ,  2a ; port
+CONSTANT REG_FRAC_PY_7_0_ADDR        ,  2b ; port
+CONSTANT REG_FRAC_PY_15_8_ADDR       ,  2c ; port
+CONSTANT REG_FRAC_PX_7_0_ADDR        ,  2d ; port
+CONSTANT REG_FRAC_PX_15_8_ADDR       ,  2e ; port
+
+CONSTANT start_frac_calc             ,  01 
+CONSTANT frac_busy                   ,  01 
+CONSTANT frac_found                  ,  02
+CONSTANT color_red_green            , 00    ; set auto in 
+CONSTANT color_blue_bg              , F1    ; set auto in 
+CONSTANT frac_fg_high               , 00    
+CONSTANT frac_fg_low                , F1    
+CONSTANT frac_bg_high               , 00    
+CONSTANT frac_bg_low                , 01    
+
+CONSTANT set_auto_inc     , 01    ; set auto in 
+
+;;---------------- mouse unit registers ----------------------
+CONSTANT REG_MOUSE_CTRL_STATUS_ADDR  ,  30 ; port
+CONSTANT REG_CURSOR_COLOR_ADDR       ,  34 ;
+CONSTANT REG_CURSOR_X_LOW_ADDR       ,  35 ;
+CONSTANT REG_CURSOR_X_HIGH_ADDR      ,  36 ;
+CONSTANT REG_CURSOR_Y_LOW_ADDR       ,  37 ;
+CONSTANT REG_CURSOR_Y_HIGH_ADDR      ,  38 ;
+CONSTANT REG_SEL_X_LEFT_LOW_ADDR     ,  39 ; 
+CONSTANT REG_SEL_X_LEFT_HIGH_ADDR    ,  3A ;
+CONSTANT REG_SEL_Y_BOT_LOW_ADDR      ,  3B ;
+CONSTANT REG_SEL_Y_BOT_HIGH_ADDR     ,  3C ; 
+CONSTANT REG_SEL_HALF_LENGTH_LOW_ADDR     ,  3E ;
+CONSTANT REG_SEL_HALF_LENGTH_HIGH_ADDR    ,  3F ;
+
+;;---------------- alu unit registers ----------------------
+
+CONSTANT REG_ALU_CTRL_STATUS_ADDR   , 40
+CONSTANT REG_ALU_A_0_ADDR           , 41
+CONSTANT REG_ALU_A_1_ADDR           , 42
+CONSTANT REG_ALU_A_2_ADDR           , 43
+CONSTANT REG_ALU_A_3_ADDR           , 44
+CONSTANT REG_ALU_B_0_ADDR           , 45
+CONSTANT REG_ALU_B_1_ADDR           , 46
+CONSTANT REG_ALU_B_2_ADDR           , 47
+CONSTANT REG_ALU_B_3_ADDR           , 48
+CONSTANT REG_ALU_Q_0_ADDR           , 41
+CONSTANT REG_ALU_Q_1_ADDR           , 42
+CONSTANT REG_ALU_Q_2_ADDR           , 43
+CONSTANT REG_ALU_Q_3_ADDR           , 44
+CONSTANT REG_ALU_R_0_ADDR           , 45
+CONSTANT REG_ALU_R_1_ADDR           , 46
+CONSTANT REG_ALU_R_2_ADDR           , 47
+CONSTANT REG_ALU_R_3_ADDR           , 48
+
+CONSTANT alu_go_bit                 , 00
+CONSTANT alu_busy_bit               , 00
+CONSTANT alu_en_bit                 , 01
+CONSTANT alu_int_mask_bit           , 02
+CONSTANT alu_clr_r_bit              , 03
+CONSTANT alu_func_bit_offse         , 04
+
+;;---------------- alu unit registers ----------------------
+CONSTANT REG_UART_STATUS_ADDR       , 50
+CONSTANT REG_UART_CONTROL_ADDR      , 51
+CONSTANT REG_UART_WRITE_FIFO_ADDR   , 52
+CONSTANT REG_UART_READ_FIFO_ADDR    , 53
+
+CONSTANT uart_rx_fifo_ready_bit     , 01  
+CONSTANT uart_rx_fifo_overrun_bit   , 02  
+CONSTANT uart_tx_fifo_ready_bit     , 04  
+CONSTANT uart_tx_fifo_overrun_bit   , 08  
+
+;;---------------- alu unit registers ----------------------
+
+CONSTANT REG_CPU_STATUS_ADDR        , 60
+CONSTANT REG_CPU_CONTROL_ADDR       , 61
+CONSTANT REG_CPU_INST_LOW_ADDR      , 62
+CONSTANT REG_CPU_INST_HIGH_ADDR     , 63
+CONSTANT REG_CPU_INST_PA_ADDR       , 64
+CONSTANT REG_CPU_ADDR_LOW_ADDR      , 65
+CONSTANT REG_CPU_ADDR_HIGH_ADDR     , 66
+
+
+
+;;============================================================================
+;; Time constants.
+;;============================================================================
+CONSTANT delay_1us_const  , 10    ; delay 1 us value
+
+
+;;============================================================================
+;; Fractal calculation constants.
+;;============================================================================
+CONSTANT PX0_0   ,  0   ;  low  byte of  pixel_x origin 
+CONSTANT PX0_1   ,  0   ;  high byte of  pixel_x origin 
+;; 0x2FF = 767 = ( 767 ---> 0 == 768 ) 
+CONSTANT PY0_0   ,  FF  ;  low  byte of  pixel_y origin 
+CONSTANT PY0_1   ,  02  ;  high byte of  pixel_y origin 
+
+;; cx0 = -2 ( 0xe0_00_00_00 ) 
+CONSTANT CX0_0 ,  00  ;  LSB of fractal x origin 
+CONSTANT CX0_1 ,  00  ;  2nd of fractal x origin 
+CONSTANT CX0_2 ,  00  ;  3nd of fractal x origin 
+CONSTANT CX0_3 ,  e0  ;  MSB of fractal x origin 
+
+;; cy0 = -1.5 ( 0xe8_00_00_00 ) 
+CONSTANT CY0_0 ,  00  ;  LSB of fractal y origin 
+CONSTANT CY0_1 ,  00  ;  2nd of fractal y origin 
+CONSTANT CY0_2 ,  00  ;  3nd of fractal y origin 
+CONSTANT CY0_3 ,  e8  ;  MSB of fractal y origin 
+
+;; delta = [ 1 - ( -2 ) ] / 768 = 1/256 = 0x00_10_00_00  
+CONSTANT DELTA_0, 00  ; 
+CONSTANT DELTA_1, 00  ; 
+CONSTANT DELTA_2, 10  ; 
+CONSTANT DELTA_3, 00  ; 
+
+;; interation number = 32 
+CONSTANT ITER_0,  20  ; 
+CONSTANT ITER_1,  00  ; 
+
+;;============================================================================
+;; INTERNAL DATA RAM ( 0 - 3F ) 
+;;============================================================================
+;; memory location of Pixel x and y 
+CONSTANT PX0_MEM    , 00  ; 
+CONSTANT PX1_MEM    , 01  ; 
+CONSTANT PY0_MEM    , 02  ; 
+CONSTANT PY1_MEM    , 03  ; 
+
+
+;;============================================================================
+;; NAMEREG
+;;============================================================================
+
+namereg  s7,   result 
+
+namereg  s8,   cx0    ; 1st byte 
+namereg  s9,   cx1    ; 
+namereg  sA,   cx2    ; 
+namereg  sB,   cx3    ; 
+
+namereg  sC,   cy0    ; 1st byte 
+namereg  sD,   cy1    ; 
+namereg  sE,   cy2    ; 
+namereg  sF,   cy3    ; 
+
+;;============================================================================
+;; M4 definition 
+;;============================================================================
+
+
+
+
+
+
+;;============================================================================
+;; Start up routine goes here.
+;;
+;; Register usage convention is:
+;; * s0, s1, s2, s3, s4, and s5 are are for general
+;;   use in the main program loop.
+;; * s7 is reserved for multiboot select variable.
+;; * s8 is reserved for display state variable.
+;; * s6, s9, sA, sB, sC, sD, sE are for general use
+;;   in the interrupt service routine.
+;; * sF is reserved for the control state variable.
+;;============================================================================
+
+        cold_start: LOAD     s0, 3 
+;;============================================================================
+;; Main program loop; for the most part, this continuously updates the LCD.
+;; Everything else is done in the interrupt service routine.
+;;============================================================================
+
+         main:      CALL      delay_1us
+                    LOAD      s0,   0
+                    OUTPUT    s0,   REG_CPU_ADDR_LOW_ADDR    
+                    OUTPUT    s0,   REG_CPU_ADDR_HIGH_ADDR    
+                    LOAD      s0,   02
+                    OUTPUT    s0,   REG_CPU_CONTROL_ADDR
+      test_begin:   LOAD      s5,   05        
+      fetch_code:   CALL      rx_from_uart 
+                    OUTPUT    s0,   REG_CPU_INST_LOW_ADDR 
+                    CALL      rx_from_uart 
+                    OUTPUT    s0,   REG_CPU_INST_HIGH_ADDR 
+                    CALL      rx_from_uart 
+                    OUTPUT    s0,   REG_CPU_INST_PA_ADDR 
+                    SUB       s5,   ONE
+                    JUMP      NZ,   fetch_code  
+           remap:   LOAD      s0,   01
+                    OUTPUT    s0,   REG_CPU_CONTROL_ADDR
+                    ENABLE INTERRUPT                   ; enable interrupt and allow mouse selection takes effect to zoom in fractal image.  
+         end_loop:  JUMP    end_loop                   ; 
+
+;;============================================================================
+;; Delay routines.  These use s0 through s3 to implement a counter.  The
+;; larger the delay, the more registers consumed.
+;;============================================================================
+
+       delay_1us: LOAD s0, delay_1us_const
+        wait_1us: SUB s0, ONE
+                  JUMP NZ, wait_1us
+                  RETURN
+      delay_40us: LOAD s1, 28                         ; 40 x 1us = 40us
+       wait_40us: CALL delay_1us
+                  SUB s1, ONE
+                  JUMP NZ, wait_40us
+                  RETURN
+
+;;============================================================================
+;; Subroutines related to UART Read and Write.
+;;============================================================================
+     
+
+;;============================================================================
+;; Function name : tx_to_uart 
+;; Description   : Send ascii byte to uart tx fifo by writting to register
+;; Input Option  : s0 : ascii byte to send out
+;  Return value  : none
+;;============================================================================
+tx_to_uart:     INPUT    s1, REG_UART_STATUS_ADDR     ; read UART status
+                TEST     s1, uart_tx_fifo_ready_bit   ; check if tx fifo is not full
+                JUMP     Z,  tx_to_uart               ; if tx fifo is NOT ready, sit and spin. 
+                OUTPUT   s0, REG_UART_WRITE_FIFO_ADDR ; write data to tx FIFO
+                RETURN
+
+rx_from_uart:   INPUT    s1, REG_UART_STATUS_ADDR     ; read UART status
+                TEST     s1, uart_rx_fifo_ready_bit   ; check if tx fifo is not full
+                JUMP     Z,  rx_from_uart             ; if rx fifo is NOT ready, sit and spin. 
+                INPUT    s0, REG_UART_READ_FIFO_ADDR 
+                RETURN
+;;============================================================================
+;; Interrupt service routine; 
+;; this is responsible for re-calculate fractal image based on mouse selection
+;;============================================================================
+   mouse_int:     
+                LOAD       s0,   0 
+                RETURNI ENABLE
+;;============================================================================
+;; Interrupt service routine vector.
+;;============================================================================
+
+                 ADDRESS   3FF
+                 JUMP      mouse_int 
+
+;;============================================================================
+;;
+;;============================================================================
